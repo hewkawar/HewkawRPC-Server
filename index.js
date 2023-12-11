@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 
 const icon = require('./icon.json');
+const { version } = require('./package.json');
 
 const app = express();
 
@@ -44,7 +45,7 @@ function getTimeRatio(currentSecond, maxLength) {
 
 HewkawRPC.on('ready', async () => {
     if (!HewkawRPC) return console.log("Can't connect to Discord");
-    console.log("Hewkaw Presence\nVersion: 1.0.0\n");
+    console.log(`Hewkaw Presence\nVersion: ${version}`);
     HewkawRPC.setActivity({
         details: "Make By HewkawAr",
         smallImageKey: "me"
@@ -62,7 +63,7 @@ app.get('/', async (req, res) => {
     const userAgent = req.get('User-Agent');
 
     console.log(`Connected with ${userAgent}`);
-    return res.status(200).json({ message: "RPC Server is Ready!" });
+    return res.status(200).json({ message: "RPC Server is Ready!", version: version });
 });
 
 app.post('/setActivity', async (req, res) => {
